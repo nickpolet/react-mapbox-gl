@@ -53,7 +53,11 @@ export class ProjectedLayer extends React.Component<Props, OverlayParams> {
   public componentDidMount() {
     const { map } = this.props;
 
-    map.on('move', this.handleMapMove);
+    map.on('move', () => {
+     flushSync(() => {
+       this.handleMapMove()
+     })
+    });
     // Now this.container is rendered and the size of container is known.
     // Recalculate the anchor/position
     this.handleMapMove();
